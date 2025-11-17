@@ -1,3 +1,5 @@
+using Calculator.Data;
+using Microsoft.EntityFrameworkCore;
 namespace Calculator
 {
     public class Program
@@ -8,6 +10,7 @@ namespace Calculator
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<CalculatorContext>(options => options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
             var app = builder.Build();
 
@@ -28,7 +31,7 @@ namespace Calculator
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Calculate}/{action=Index}/{id?}");
+                pattern: "{controller=Calculator}/{action=Index}/{id?}");
 
             app.Run();
         }
